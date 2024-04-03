@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: מרץ 22, 2024 בזמן 02:46 PM
+-- Generation Time: אפריל 04, 2024 בזמן 01:46 AM
 -- גרסת שרת: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,8 +44,28 @@ CREATE TABLE `members_details` (
 --
 
 INSERT INTO `members_details` (`id`, `last_name`, `first_name`, `address`, `birth_date`, `phone`, `cell_phone`, `start_date`, `end_date`) VALUES
-(325085215, 'Ginzburg', 'David', 'HPISGA', '2001-04-03', '089744605', '0546587749', '0007-07-07', '0007-07-07'),
-(325746147, 'Ginzburg', 'Tzvi', 'Bney Brak', '2004-01-06', '089744605', '0533134012', '0000-00-00', '0000-00-00');
+(325746147, 'Ginz', 'Etty Chaya', 'Rabbi Akiva', '2004-01-06', '089744605', '0533153236', '0000-00-00', '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- מבנה טבלה עבור טבלה `vacc_records`
+--
+
+CREATE TABLE `vacc_records` (
+  `no` int(1) NOT NULL,
+  `id` int(9) NOT NULL,
+  `vdate` date NOT NULL,
+  `manufacturer` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- הוצאת מידע עבור טבלה `vacc_records`
+--
+
+INSERT INTO `vacc_records` (`no`, `id`, `vdate`, `manufacturer`) VALUES
+(1, 325746147, '2022-02-01', 'fiser'),
+(2, 325746147, '2022-02-02', 'fiser');
 
 --
 -- Indexes for dumped tables
@@ -56,6 +76,12 @@ INSERT INTO `members_details` (`id`, `last_name`, `first_name`, `address`, `birt
 --
 ALTER TABLE `members_details`
   ADD PRIMARY KEY (`id`);
+
+--
+-- אינדקסים לטבלה `vacc_records`
+--
+ALTER TABLE `vacc_records`
+  ADD PRIMARY KEY (`no`,`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables

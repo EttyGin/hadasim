@@ -9,28 +9,29 @@ $address = htmlspecialchars($_POST['address']);
 $birth_date = htmlspecialchars($_POST['birth_date']);
 $phone = htmlspecialchars($_POST['phone']);
 $cell_phone = htmlspecialchars($_POST['cell_phone']);
-#$start_date = htmlspecialchars($_POST['start_tdate']);
-#$end_date = htmlspecialchars($_POST['end_date']);
+$start_date = htmlspecialchars($_POST['start_tdate']);
+$end_date = htmlspecialchars($_POST['end_date']);
 $start_date = $row['start_date'];
 $end_date = $row['end_date'];
 
-#$no = htmlspecialchars($_POST['no']);
-#$vdate = htmlspecialchars($_POST['vdate']);
-#$manufacturer = htmlspecialchars($_POST['manufacturer']);
+$no = htmlspecialchars($_POST['no']);
+$vdate = htmlspecialchars($_POST['vdate']);
+$manufacturer = htmlspecialchars($_POST['manufacturer']);
 
-$sql ="select * from members_details where id = '$id'";
+$sql ="select * from members_details where id = '" . $id . "'"; 
 $val = $db->query($sql);
+$row= $val->fetch_assoc();
+
 if ($val) {
-header('location: index.php');
+  header('location: index.php');
 }
 }
 $id = $_GET['id'];
-$sql = "select * from members_details WHERE id = '$id'";
-  #$sql = "select * from members_details 
-   #     LEFT JOIN vacc ON members_details.id = vacc.id 
-    #    WHERE members_details.id = '$id'";
-        $rows = $db ->query($sql);
-$row= $rows->fetch_assoc();
+$sql ="select * from members_details where id = '" . $id . "'"; 
+$val = $db->query($sql);
+$row= $val->fetch_assoc();
+$sq_l = "select * from vacc_records WHERE id = '" . $id . "'"; 
+$rows_ = $db ->query($sq_l);
 ?>
 <html>
   <head>
@@ -44,6 +45,7 @@ $row= $rows->fetch_assoc();
       
       <center><h1>Card of <?php echo $row['id']?></h1></center>
       <a href = "index.php" class = "btn btn-success pull-left"> Back to main</a>
+      
     </div>
     <table class="table table-hover">
       <thead>
@@ -74,6 +76,59 @@ $row= $rows->fetch_assoc();
             <td><?php echo $row['end_date'] !== '0000-00-00' ? $row['end_date'] : ''; ?></td>
             <td><a href = "update.php?id=<?php echo $row['id']; ?>" class = "btn btn-success"> Edit</a></td>
           </tr>
+        </div>
+      </tbody>
+    </table>
+        <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Vaccination number:</th>
+          <th scope="col">Date</th>
+          <th scope="col">Manufacturer</th>
+          <hr> <br>
+        </tr>
+        <div class="row" style="margin-top: 70px;">
+        <div class = "col-md-10 col-md-offset-1">
+          <button type="button" data-target = "#myModal" data-toggle="modal"  class="btn btn-success ">Add A Vaccination</button>
+          <hr> <br>
+          <!-- Modal -->
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Vaccination Details</h4>
+                </div>
+                <div class="modal-body">
+                  <form method="post" action="add_vacc.php?id=<?php echo $row['id']; ?>">
+                    <div class="form-group">
+                      <label>Member Details</label>
+                      <input type="date" required name="vdate" class="form-control"> 
+                      <input type="text" required name="manufacturer" placeholder="manufacturer"  class="form-control">
+                    </div>
+                    <input type="submit" name="enter" value="Add A Vaccination" class="btn btn-success" >
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </thead>
+      <tbody>
+        <div class="table-responsive">
+          <tr>
+          <?php while ($row_ = $rows_->fetch_assoc()): ?>
+
+            <th><?php echo $row_['no'] ?></th>
+            <td><?php echo $row_['vdate'] ?></td>
+            <td><?php echo $row_['manufacturer'] ?></td>
+          </tr>
+          <?php endwhile; ?>
         </div>
       </tbody>
     </table>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php include 'db.php';
-$sql = "select id, last_name, first_name from members_details ORDER BY last_name ASC, first_name ASC";
+$sql = "select id, last_name, first_name from members_details";
 $rows = $db ->query($sql);
 ?>
 <html>
